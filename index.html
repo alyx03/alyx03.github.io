@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>三号原点 | 窥见趋势的暗流</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <style>
         /* ================= 1. 顶级视觉系统 ================= */
         :root {
@@ -59,7 +60,7 @@
             }
         }
 
-        /* ================= 2. 主页布局与动效 ================= */
+        /* ================= 2. 主页布局 ================= */
         .page-wrapper {
             max-width: 1200px;
             margin: 0 auto;
@@ -153,17 +154,13 @@
             transform: translateY(-5px);
         }
 
-        .card .placeholder-img {
+        .card-img {
             width: 100%;
             height: 200px;
-            background: #2c2c2e;
+            object-fit: cover;
             border-radius: 14px;
             margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #424245;
-            font-size: 0.9rem;
+            background: #2c2c2e;
         }
 
         .btn-group {
@@ -192,7 +189,7 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        /* ================= 3. 简历弹窗样式 (严格保留原版) ================= */
+        /* ================= 3. 简历弹窗 (补全版) ================= */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -228,24 +225,6 @@
 
         .modal-overlay.active .resume-window {
             transform: scale(1);
-        }
-
-        /* 极致细滚动条 */
-        .resume-main,
-        .resume-window {
-            scrollbar-width: thin;
-            scrollbar-color: rgba(210, 210, 215, 0.7) transparent;
-        }
-
-        .resume-main::-webkit-scrollbar,
-        .resume-window::-webkit-scrollbar {
-            width: 5px;
-        }
-
-        .resume-main::-webkit-scrollbar-thumb,
-        .resume-window::-webkit-scrollbar-thumb {
-            background: rgba(210, 210, 215, 0.7);
-            border-radius: 10px;
         }
 
         .resume-sidebar {
@@ -308,6 +287,15 @@
             overflow-y: auto;
             background: #fff;
             text-align: left;
+        }
+
+        .resume-main::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .resume-main::-webkit-scrollbar-thumb {
+            background: rgba(210, 210, 215, 0.7);
+            border-radius: 10px;
         }
 
         .section-title {
@@ -441,17 +429,17 @@
             <h2 class="section-header">趋势洞察 & 项目展示</h2>
             <div class="grid">
                 <div class="card">
-                    <div class="placeholder-img">可替换为项目图片 / 文章封面</div>
+                    <img src="project1.png" alt="项目1" class="card-img">
                     <h3>AI 时代的网络工程</h3>
                     <p>探讨自动化运维如何改变传统网络架构的底层逻辑。</p>
                 </div>
                 <div class="card">
-                    <div class="placeholder-img">可替换为项目图片 / 摄影照片</div>
+                    <img src="project2.png" alt="项目2" class="card-img">
                     <h3>南京秋日记录</h3>
                     <p>在栖霞区的街道间，捕捉那些被代码遗忘的瞬间。</p>
                 </div>
                 <div class="card">
-                    <div class="placeholder-img">可替换为项目图片 / 技术文章</div>
+                    <img src="project3.png" alt="项目3" class="card-img">
                     <h3>ERP 系统实施心得</h3>
                     <p>技术实施不仅是配置，更是对业务流程的深度重构。</p>
                 </div>
@@ -545,20 +533,14 @@
 
     <script>
         function toggleModal(id) {
-            const modal = document.getElementById(id);
-            modal.classList.toggle('active');
+            document.getElementById(id).classList.toggle('active');
         }
         window.onclick = function (e) {
             if (e.target.classList.contains('modal-overlay')) e.target.classList.remove('active');
         }
-
-        // 滚动揭示动效
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('visible');
-            });
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
         }, { threshold: 0.1 });
-
         document.querySelectorAll('.content-section').forEach(section => observer.observe(section));
     </script>
 </body>
