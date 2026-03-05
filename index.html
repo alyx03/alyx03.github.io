@@ -173,6 +173,104 @@
             color: #3b4249;
             letter-spacing: 1px;
         }
+
+        /* 简历悬浮窗背景（遮罩层） */
+        .modal-overlay {
+            display: none;
+            /* 默认隐藏 */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            /* 半透明黑色背景 */
+            backdrop-filter: blur(10px);
+            /* 磨砂玻璃效果 */
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 纯白苹果风简历窗口 */
+        .resume-window {
+            background: #ffffff;
+            width: 90%;
+            max-width: 600px;
+            height: 80vh;
+            border-radius: 20px;
+            padding: 40px;
+            position: relative;
+            color: #1d1d1f;
+            overflow-y: auto;
+            /* 内容多了可以滚动 */
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        /* 窗口打开时的动画 */
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-overlay.active .resume-window {
+            transform: scale(1);
+        }
+
+        /* 关闭按钮 */
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #86868b;
+        }
+
+        /* 简历内的苹果风格文字 */
+        .resume-content h2 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .resume-section {
+            margin-bottom: 30px;
+            border-bottom: 1px solid #f5f5f7;
+            padding-bottom: 15px;
+        }
+
+        .resume-section h3 {
+            font-size: 17px;
+            color: #86868b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .resume-section p {
+            font-size: 16px;
+            color: #1d1d1f;
+            margin: 5px 0;
+        }
+
+        /* 启动按钮样式 */
+        .open-resume-btn {
+            margin-top: 30px;
+            padding: 10px 25px;
+            border: 1px solid #05FF83;
+            color: #05FF83;
+            background: transparent;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+
+        .open-resume-btn:hover {
+            background: #05FF83;
+            color: #000;
+        }
     </style>
 </head>
 
@@ -189,7 +287,46 @@
 
     <div class="footer">
         © 2026 三号原点. Powered by AI Dreams & Alyx Soul.
+        <button class="open-resume-btn" onclick="toggleResume()">查看简历 [OPEN DOSSIER]</button>
+
+        <div class="modal-overlay" id="resumeModal">
+            <div class="resume-window">
+                <span class="close-btn" onclick="toggleResume()">✕</span>
+                <div class="resume-content">
+                    <h2>Alyx / 三号原点</h2>
+                    <div class="resume-section">
+                        <h3>个人核心 / Core</h3>
+                        <p>AI 创作者、趋势观察者</p>
+                        <p>专注于在数字暗流中捕捉故事的涟漪。</p>
+                    </div>
+                    <div class="resume-section">
+                        <h3>技能轨迹 / Skills</h3>
+                        <p>· 提示词工程 (Prompt Engineering)</p>
+                        <p>· 视觉概念设计 (Concept Design)</p>
+                        <p>· 跨维度叙事 (Cross-media Storytelling)</p>
+                    </div>
+                    <div class="resume-section">
+                        <h3>坐标 / Location</h3>
+                        <p>Alyx 的内心深处，时间永远。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    <script>
+        function toggleResume() {
+            const modal = document.getElementById('resumeModal');
+            modal.classList.toggle('active');
+        }
+
+        // 点击窗口外部也可以关闭
+        window.onclick = function (event) {
+            const modal = document.getElementById('resumeModal');
+            if (event.target == modal) {
+                toggleResume();
+            }
+        }
+    </script>
 </body>
 
 </html>
