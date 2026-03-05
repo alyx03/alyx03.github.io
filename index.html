@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>三号原点 | 汤梦军的个人主页</title>
+    <title>三号原点 | 窥见趋势的暗流</title>
     <style>
-        /* ================= 1. 核心动画与基础样式 ================= */
+        /* ================= 1. 首页：赛博神秘风格 (保持最初文案) ================= */
         @keyframes scanline {
             0% {
                 transform: translateY(-100vh);
@@ -51,15 +51,10 @@
             }
         }
 
-        @keyframes float {
-
-            0%,
-            100% {
+        @keyframes fade-in {
+            to {
+                opacity: 1;
                 transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-10px);
             }
         }
 
@@ -71,7 +66,7 @@
         body {
             background-color: #0d1117;
             color: #c9d1d9;
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -82,7 +77,6 @@
             position: relative;
         }
 
-        /* 扫描线 */
         body::after {
             content: "";
             position: absolute;
@@ -96,7 +90,6 @@
             pointer-events: none;
         }
 
-        /* 主页中心内容 */
         .main-hero {
             text-align: center;
             z-index: 10;
@@ -107,67 +100,73 @@
             width: 180px;
             margin: 0 auto;
             border-radius: 15px;
-            animation: glow 5s ease-in-out infinite, float 6s ease-in-out infinite;
-            transition: transform 0.5s;
-        }
-
-        @media (min-width: 768px) {
-            .logo-container {
-                width: 240px;
-            }
+            animation: glow 5s ease-in-out infinite;
         }
 
         h1 {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             color: #05FF83;
-            letter-spacing: 2px;
-            margin: 20px 0;
+            letter-spacing: 4px;
+            margin: 25px 0 10px;
             overflow: hidden;
             white-space: nowrap;
             border-right: 3px solid transparent;
-            animation: typing 2s steps(15, end), blink-caret .75s step-end infinite;
+            animation: typing 2.5s steps(20, end), blink-caret .75s step-end infinite;
+            display: inline-block;
         }
 
-        @media (min-width: 768px) {
-            h1 {
-                font-size: 2rem;
-            }
+        .slogan {
+            font-size: 1rem;
+            color: #f0f6fc;
+            margin: 10px 0 20px;
+            letter-spacing: 1px;
+        }
+
+        .divider {
+            border: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #30363d, transparent);
+            margin: 20px 0;
         }
 
         .info-p {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: #8b949e;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             opacity: 0;
-            animation: fade-in 1s forwards 1.5s;
+            animation: fade-in 1s forwards 2s;
         }
 
-        @keyframes fade-in {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
         }
 
-        .open-btn {
-            margin-top: 25px;
-            padding: 12px 30px;
+        .btn {
+            padding: 10px 25px;
             border: 1px solid #05FF83;
             color: #05FF83;
             background: transparent;
             border-radius: 30px;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             transition: 0.3s;
         }
 
-        .open-btn:hover {
+        .btn:hover {
             background: #05FF83;
             color: #000;
-            box-shadow: 0 0 20px #05FF83;
+            box-shadow: 0 0 15px #05FF83;
         }
 
-        /* ================= 2. 响应式简历弹窗 ================= */
+        .btn.secondary {
+            border-color: #8b949e;
+            color: #8b949e;
+        }
+
+        /* ================= 2. 简历弹窗样式 ================= */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -193,8 +192,6 @@
             max-width: 1000px;
             border-radius: 20px;
             display: flex;
-            /* 默认双栏 */
-            flex-direction: row;
             overflow: hidden;
             color: #1d1d1f;
             transform: scale(0.9);
@@ -205,27 +202,23 @@
             transform: scale(1);
         }
 
-        /* 响应式断点：手机和平板窄屏 */
-        @media (max-width: 850px) {
-            .resume-window {
-                flex-direction: column;
-                overflow-y: auto;
-            }
-
-            .resume-sidebar {
-                width: 100% !important;
-                border-right: none !important;
-                border-bottom: 1px solid #e6e6e8;
-                padding: 30px 20px !important;
-            }
-
-            .resume-main {
-                padding: 30px 20px !important;
-                overflow-y: visible !important;
-            }
+        /* 核心修复：极致精细滚动条 */
+        .resume-main::-webkit-scrollbar,
+        .resume-window::-webkit-scrollbar {
+            width: 5px;
         }
 
-        /* 侧边栏 */
+        .resume-main::-webkit-scrollbar-thumb,
+        .resume-window::-webkit-scrollbar-thumb {
+            background: rgba(210, 210, 215, 0.7);
+            border-radius: 10px;
+        }
+
+        .resume-main::-webkit-scrollbar-track,
+        .resume-window::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
         .resume-sidebar {
             width: 30%;
             background: #f5f5f7;
@@ -240,7 +233,6 @@
         .profile-photo {
             width: 130px;
             height: 173px;
-            background: #e8e8ed;
             border-radius: 10px;
             object-fit: cover;
             border: 3px solid #fff;
@@ -259,42 +251,32 @@
             font-size: 0.85rem;
             font-weight: 500;
             margin-bottom: 25px;
+            text-align: center;
         }
 
         .contact-box {
             width: 100%;
             font-size: 0.8rem;
-            line-height: 1.8;
             color: #424245;
         }
 
         .contact-box div {
-            margin-bottom: 8px;
-            display: flex;
-            flex-direction: column;
+            margin-bottom: 12px;
         }
 
         .contact-box b {
             color: #86868b;
             text-transform: uppercase;
             font-size: 0.7rem;
+            display: block;
         }
 
-        /* 主内容区 */
         .resume-main {
             flex: 1;
             padding: 40px 50px;
             overflow-y: auto;
             background: #fff;
-        }
-
-        .resume-main::-webkit-scrollbar {
-            width: 5px;
-        }
-
-        .resume-main::-webkit-scrollbar-thumb {
-            background: #d2d2d7;
-            border-radius: 10px;
+            text-align: left;
         }
 
         .section-title {
@@ -306,7 +288,6 @@
             margin: 30px 0 15px;
             display: flex;
             align-items: center;
-            text-transform: uppercase;
         }
 
         .section-title:first-child {
@@ -331,7 +312,6 @@
             justify-content: space-between;
             align-items: baseline;
             margin-bottom: 5px;
-            flex-wrap: wrap;
         }
 
         .block-h h4 {
@@ -354,36 +334,12 @@
 
         .block ul {
             padding-left: 18px;
-            margin-top: 8px;
+            margin-top: 5px;
         }
 
         .highlight {
             color: #0071e3;
             font-weight: 600;
-        }
-
-        /* 技能网格自适应 */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-        }
-
-        .skill-card {
-            background: #f9f9fb;
-            padding: 12px;
-            border-radius: 10px;
-        }
-
-        .skill-card h5 {
-            margin: 0 0 5px;
-            font-size: 0.85rem;
-        }
-
-        .skill-card p {
-            font-size: 0.75rem;
-            margin: 0;
-            color: #6e6e73;
         }
 
         .close-btn {
@@ -396,12 +352,22 @@
             z-index: 1010;
         }
 
-        .footer {
-            position: absolute;
-            bottom: 20px;
-            font-size: 10px;
-            color: #3b4249;
-            text-align: center;
+        @media (max-width: 850px) {
+            .resume-window {
+                flex-direction: column;
+                overflow-y: auto;
+            }
+
+            .resume-sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #e6e6e8;
+            }
+
+            .resume-main {
+                padding: 30px 20px;
+                overflow-y: visible;
+            }
         }
     </style>
 </head>
@@ -412,25 +378,26 @@
         <div class="logo-container">
             <img src="logo.png" alt="Logo" style="width:100%; border-radius:15px;">
         </div>
-        <div class="text-content">
-            <h1>三号原点</h1>
-            <p class="info-p">坐标：南京 | 探索者：汤梦军</p>
-            <p class="info-p" style="animation-delay: 2s;">NETWORK ENGINEER ARCHIVE</p>
-            <button class="open-btn" onclick="toggleResume()">查看简历 [OPEN]</button>
+        <h1>三号原点</h1>
+        <p class="slogan">从故事出发，用AI造梦，窥见趋势的暗流。</p>
+        <hr class="divider">
+        <p class="info-p">坐标：Alyx的内心</p>
+        <p class="info-p" style="animation-delay: 2.5s;">时间：永远</p>
+
+        <div class="btn-group">
+            <button class="btn" onclick="toggleModal('resumeModal')">调阅档案</button>
+            <button class="btn secondary" onclick="toggleModal('msgModal')">建立通信</button>
         </div>
     </div>
 
-    <div class="footer">© 2026 三号原点 | 全平台适配版</div>
-
     <div class="modal-overlay" id="resumeModal">
         <div class="resume-window">
-            <span class="close-btn" onclick="toggleResume()">✕</span>
+            <span class="close-btn" onclick="toggleModal('resumeModal')">✕</span>
 
             <div class="resume-sidebar">
                 <img src="your-photo.jpg" alt="汤梦军" class="profile-photo">
                 <div class="sidebar-name">汤梦军</div>
-                <div class="sidebar-tag">网络工程师 / 运维专家</div>
-
+                <div class="sidebar-tag">网络工程师 / 网络运维</div>
                 <div class="contact-box">
                     <div><b>Phone</b><span>13852067963</span></div>
                     <div><b>Email</b><span>3042540737@qq.com</span></div>
@@ -441,91 +408,77 @@
 
             <div class="resume-main">
                 <h3 class="section-title">核心技能</h3>
-                <div class="skills-grid">
-                    <div class="skill-card">
-                        <h5>数通基础</h5>
-                        <p>精通TCP/IP、OSPF、VLAN、STP配置；熟练使用eNSP/PT模拟器。</p>
-                    </div>
-                    <div class="skill-card">
-                        <h5>自动化运维</h5>
-                        <p>掌握Python（Netmiko库）与Shell脚本，实现巡检与配置备份自动化。</p>
-                    </div>
-                    <div class="skill-card">
-                        <h5>服务部署</h5>
-                        <p>熟悉Nginx、Redis、MySQL环境搭建，具备ERP系统部署经验。</p>
-                    </div>
-                    <div class="skill-card">
-                        <h5>云网安全</h5>
-                        <p>熟悉阿里云VPC配置、FortiGate防火墙及OpenStack集群监测。</p>
-                    </div>
+                <div class="block">
+                    <p>• <b>数通基础：</b>精通TCP/IP、OSPF、VLAN、STP；熟练配置华为/思科交换机及路由器；掌握eNSP/PT模拟器。</p>
+                    <p>• <b>运维工具：</b>熟练使用Wireshark抓包、Zabbix监控、Ansible自动化运维；了解FortiGate防火墙。</p>
+                    <p>• <b>服务部署：</b>熟悉ERP系统、Nginx、Redis、Tomcat、MySQL环境搭建；了解OpenStack集群与云服务器监测。</p>
+                    <p>• <b>自动化：</b>掌握Python（Netmiko库）、Shell脚本，实现巡检与配置备份自动化。</p>
                 </div>
 
                 <h3 class="section-title">项目经验</h3>
                 <div class="block">
                     <div class="block-h">
-                        <h4>企业级局域网搭建与优化</h4>
-                        <span>2024.03 - 2024.06</span>
+                        <h4>企业级局域网搭建与优化</h4><span>2024.03 - 2024.06</span>
                     </div>
                     <ul>
-                        <li>配置OSPF动态路由实现跨网段通信，<span class="highlight">网络可用性提升至99.5%</span>。</li>
-                        <li>编写Shell脚本自动化备份，<span class="highlight">降低人工成本约80%</span>。</li>
+                        <li>搭建3层VLAN网络，配置OSPF动态路由，<span class="highlight">可用性提升至99.5%</span>。</li>
+                        <li>编写Shell脚本实现自动化备份，<span class="highlight">人工成本降低80%</span>。</li>
                     </ul>
                 </div>
                 <div class="block">
                     <div class="block-h">
-                        <h4>校园网故障排查实训</h4>
-                        <span>2023.09 - 2023.12</span>
+                        <h4>校园网络故障排查实训</h4><span>2023.09 - 2023.12</span>
                     </div>
                     <ul>
-                        <li>独立解决DHCP池耗尽、DNS解析失败等故障，<span class="highlight">解决率100%</span>。</li>
-                        <li>开发基于蓝心策略的轻量化扫描工具，实现毫秒级响应。</li>
+                        <li>独立解决DHCP地址池耗尽、DNS解析失败等故障，<span class="highlight">解决率100%</span>。</li>
+                        <li>开发轻量化扫描系统，实现毫秒级响应。</li>
                     </ul>
                 </div>
 
                 <h3 class="section-title">工作经历</h3>
                 <div class="block">
                     <div class="block-h">
-                        <h4>南京商能科技 | 技术实施</h4>
-                        <span>2025.06 - 2026.02</span>
+                        <h4>南京商能科技有限公司 | 技术实施</h4><span>2025.06 - 2026.02</span>
                     </div>
                     <ul>
-                        <li>负责核心设备升级、VLAN划分，保障业务迁移零中断。</li>
-                        <li>编写《运维手册》与《ERP技术文档》，<span class="highlight">提升效率30%</span>。</li>
+                        <li>负责核心设备升级，处理各类网络故障，响应时长≤10分钟。</li>
+                        <li>部署ERP系统并编写技术文档，<span class="highlight">提升效率30%</span>。</li>
                     </ul>
                 </div>
 
                 <h3 class="section-title">教育背景</h3>
                 <div class="block">
                     <div class="block-h">
-                        <h4>南京工业职业技术大学</h4>
-                        <span>2021 - 2025</span>
+                        <h4>南京工业职业技术大学</h4><span>2021.09 - 2025.06</span>
                     </div>
-                    <p><b>网络工程技术 | 本科 | GPA 3.2/4.0</b></p>
+                    <p>网络工程技术 | 本科 | GPA 3.2/4.0</p>
                     <p>核心课：HCIA-Datacom、云计算、Linux系统管理、网络安全。</p>
                 </div>
 
                 <h3 class="section-title">证书荣誉</h3>
-                <p>• 英语四级 (CET-4) &nbsp;&nbsp; • 计算机三级（网络技术）</p>
-                <p>• 创新创业大赛一等奖 &nbsp;&nbsp; • 校级三等奖学金</p>
+                <p>英语四级 (CET-4) | 计算机三级（网络） | 创新创业大赛一等奖 | 校级奖学金</p>
             </div>
         </div>
     </div>
 
-    <script>
-        function toggleResume() {
-            const modal = document.getElementById('resumeModal');
-            modal.classList.toggle('active');
-            // 防止弹窗时底层背景滚动
-            if (modal.classList.contains('active')) {
-                document.body.style.overflow = 'hidden';
-            } else {
-                document.body.style.overflow = 'hidden'; // 主页始终不滚动
-            }
-        }
+    <div class="modal-overlay" id="msgModal">
+        <div
+            style="background: #161b22; padding: 30px; border-radius: 20px; border: 1px solid #30363d; color: #fff; width: 90%; max-width: 400px;">
+            <span class="close-btn" onclick="toggleModal('msgModal')">✕</span>
+            <h2 style="color: #05FF83; font-size: 1.2rem;">建立通信</h2>
+            <p style="font-size: 0.8rem; color: #8b949e; margin-bottom: 20px;">3042540737@qq.com</p>
+            <button class="btn" style="width: 100%;"
+                onclick="window.location.href='mailto:3042540737@qq.com'">点击唤起邮件</button>
+        </div>
+    </div>
 
-        window.onclick = function (event) {
-            const modal = document.getElementById('resumeModal');
-            if (event.target == modal) { toggleResume(); }
+    <script>
+        function toggleModal(id) {
+            const modal = document.getElementById(id);
+            modal.classList.toggle('active');
+        }
+        window.onclick = function (e) {
+            if (e.target.classList.contains('modal-overlay')) e.target.classList.remove('active');
         }
     </script>
 </body>
