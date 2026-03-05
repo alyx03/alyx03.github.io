@@ -6,22 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>三号原点 | 汤梦军的个人主页</title>
     <style>
-        /* --- 1. 主页面基础样式 (深色科技感) --- */
-        body {
-            background-color: #0d1117;
-            color: #c9d1d9;
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
-            position: relative;
-        }
-
-        /* 动画定义 */
+        /* ================= 1. 核心动画与基础样式 ================= */
         @keyframes scanline {
             0% {
                 transform: translateY(-100vh);
@@ -62,7 +47,7 @@
             }
 
             50% {
-                box-shadow: 0 0 40px rgba(5, 255, 131, 0.7);
+                box-shadow: 0 0 30px rgba(5, 255, 131, 0.5);
             }
         }
 
@@ -78,6 +63,25 @@
             }
         }
 
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+        }
+
         /* 扫描线 */
         body::after {
             content: "";
@@ -86,92 +90,84 @@
             left: 0;
             width: 100%;
             height: 2px;
-            background: linear-gradient(to right, transparent, rgba(5, 255, 131, 0.4), transparent);
+            background: linear-gradient(to right, transparent, rgba(5, 255, 131, 0.3), transparent);
             animation: scanline 4s linear infinite;
-            z-index: 10;
+            z-index: 5;
             pointer-events: none;
         }
 
-        .logo-container {
-            width: 220px;
-            border-radius: 12px;
-            animation: glow 6s ease-in-out infinite, float 8s ease-in-out infinite;
-            transition: transform 0.8s cubic-bezier(0.2, 0, 0.2, 1);
-            cursor: pointer;
-            z-index: 20;
-        }
-
-        .logo-container:hover {
-            transform: scale(1.05) rotate(1deg);
-        }
-
-        .text-content {
+        /* 主页中心内容 */
+        .main-hero {
             text-align: center;
-            margin-top: 30px;
-            z-index: 20;
+            z-index: 10;
+            padding: 20px;
+        }
+
+        .logo-container {
+            width: 180px;
+            margin: 0 auto;
+            border-radius: 15px;
+            animation: glow 5s ease-in-out infinite, float 6s ease-in-out infinite;
+            transition: transform 0.5s;
+        }
+
+        @media (min-width: 768px) {
+            .logo-container {
+                width: 240px;
+            }
         }
 
         h1 {
-            font-size: 28px;
+            font-size: 1.5rem;
             color: #05FF83;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
+            margin: 20px 0;
             overflow: hidden;
             white-space: nowrap;
-            display: inline-block;
-            animation: typing 2.5s steps(20, end), blink-caret .7s step-end infinite;
             border-right: 3px solid transparent;
+            animation: typing 2s steps(15, end), blink-caret .75s step-end infinite;
+        }
+
+        @media (min-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
         }
 
         .info-p {
-            margin-top: 15px;
-            font-size: 14px;
+            font-size: 0.9rem;
             color: #8b949e;
+            margin-bottom: 10px;
             opacity: 0;
-            animation: fade-in 1.5s ease-out forwards;
-            animation-delay: 2.5s;
+            animation: fade-in 1s forwards 1.5s;
         }
 
         @keyframes fade-in {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
 
-        /* 启动按钮 */
-        .open-resume-btn {
-            margin-top: 30px;
+        .open-btn {
+            margin-top: 25px;
             padding: 12px 30px;
             border: 1px solid #05FF83;
             color: #05FF83;
             background: transparent;
             border-radius: 30px;
             cursor: pointer;
-            font-size: 13px;
-            letter-spacing: 1px;
-            transition: all 0.3s;
-            z-index: 20;
+            font-size: 0.9rem;
+            transition: 0.3s;
         }
 
-        .open-resume-btn:hover {
+        .open-btn:hover {
             background: #05FF83;
             color: #000;
-            box-shadow: 0 0 20px rgba(5, 255, 131, 0.5);
+            box-shadow: 0 0 20px #05FF83;
         }
 
-        .footer {
-            position: absolute;
-            bottom: 30px;
-            font-size: 11px;
-            color: #3b4249;
-        }
-
-        /* --- 2. 简历悬浮窗样式 (苹果白) --- */
+        /* ================= 2. 响应式简历弹窗 ================= */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -179,8 +175,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(15px);
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
             z-index: 1000;
             justify-content: center;
             align-items: center;
@@ -193,73 +189,103 @@
         .resume-window {
             background: #ffffff;
             width: 95%;
-            max-width: 950px;
             height: 90vh;
-            border-radius: 24px;
+            max-width: 1000px;
+            border-radius: 20px;
             display: flex;
+            /* 默认双栏 */
+            flex-direction: row;
             overflow: hidden;
             color: #1d1d1f;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
             transform: scale(0.9);
-            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
         .modal-overlay.active .resume-window {
             transform: scale(1);
         }
 
-        /* 简历左侧栏 */
+        /* 响应式断点：手机和平板窄屏 */
+        @media (max-width: 850px) {
+            .resume-window {
+                flex-direction: column;
+                overflow-y: auto;
+            }
+
+            .resume-sidebar {
+                width: 100% !important;
+                border-right: none !important;
+                border-bottom: 1px solid #e6e6e8;
+                padding: 30px 20px !important;
+            }
+
+            .resume-main {
+                padding: 30px 20px !important;
+                overflow-y: visible !important;
+            }
+        }
+
+        /* 侧边栏 */
         .resume-sidebar {
-            width: 28%;
+            width: 30%;
             background: #f5f5f7;
-            padding: 40px 20px;
+            padding: 40px 25px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            border-right: 1px solid #d2d2d7;
-            text-align: center;
+            border-right: 1px solid #e6e6e8;
+            flex-shrink: 0;
         }
 
         .profile-photo {
-            width: 140px;
-            height: 186px;
+            width: 130px;
+            height: 173px;
             background: #e8e8ed;
-            border-radius: 8px;
+            border-radius: 10px;
             object-fit: cover;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             border: 3px solid #fff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 20px;
         }
 
-        .sidebar-info h2 {
-            font-size: 24px;
-            margin: 10px 0 5px;
-            font-weight: 600;
+        .sidebar-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
         }
 
-        .sidebar-info .title {
-            font-size: 14px;
+        .sidebar-tag {
             color: #0071e3;
-            margin-bottom: 25px;
+            font-size: 0.85rem;
             font-weight: 500;
+            margin-bottom: 25px;
         }
 
-        .contact-item {
-            font-size: 13px;
-            color: #424245;
-            margin: 10px 0;
-            text-align: left;
+        .contact-box {
             width: 100%;
-            padding-left: 10px;
+            font-size: 0.8rem;
+            line-height: 1.8;
+            color: #424245;
         }
 
-        /* 简历右侧栏 */
+        .contact-box div {
+            margin-bottom: 8px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contact-box b {
+            color: #86868b;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+        }
+
+        /* 主内容区 */
         .resume-main {
-            width: 72%;
-            padding: 40px 45px;
+            flex: 1;
+            padding: 40px 50px;
             overflow-y: auto;
-            text-align: left;
-            line-height: 1.6;
+            background: #fff;
         }
 
         .resume-main::-webkit-scrollbar {
@@ -271,140 +297,130 @@
             border-radius: 10px;
         }
 
-        .resume-section {
-            margin-bottom: 30px;
-        }
-
-        .resume-section h3 {
-            font-size: 15px;
+        .section-title {
+            font-size: 0.9rem;
             color: #0071e3;
+            font-weight: 700;
+            border-bottom: 2px solid #f5f5f7;
+            padding-bottom: 8px;
+            margin: 30px 0 15px;
+            display: flex;
+            align-items: center;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 1px solid #f5f5f7;
-            padding-bottom: 6px;
-            margin-bottom: 15px;
-            position: relative;
         }
 
-        .resume-section h3::after {
+        .section-title:first-child {
+            margin-top: 0;
+        }
+
+        .section-title::before {
             content: "";
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            width: 40px;
-            height: 1px;
+            width: 4px;
+            height: 16px;
             background: #0071e3;
+            margin-right: 10px;
+            border-radius: 2px;
         }
 
-        .exp-item {
-            margin-bottom: 20px;
+        .block {
+            margin-bottom: 25px;
         }
 
-        .exp-header {
+        .block-h {
             display: flex;
             justify-content: space-between;
             align-items: baseline;
             margin-bottom: 5px;
+            flex-wrap: wrap;
         }
 
-        .exp-header h4 {
-            font-size: 16px;
+        .block-h h4 {
+            font-size: 1rem;
             margin: 0;
             color: #1d1d1f;
-            font-weight: 600;
         }
 
-        .exp-time {
-            font-size: 13px;
+        .block-h span {
+            font-size: 0.8rem;
             color: #86868b;
-            font-weight: 500;
         }
 
-        .resume-main p,
-        .resume-main li {
-            font-size: 14px;
+        .block p,
+        .block li {
+            font-size: 0.85rem;
             color: #424245;
-            margin: 4px 0;
+            line-height: 1.6;
         }
 
-        .resume-main ul {
+        .block ul {
             padding-left: 18px;
-            margin: 8px 0;
-        }
-
-        .resume-main b {
-            color: #1d1d1f;
+            margin-top: 8px;
         }
 
         .highlight {
             color: #0071e3;
-            font-weight: 500;
+            font-weight: 600;
         }
 
+        /* 技能网格自适应 */
         .skills-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 15px;
         }
 
+        .skill-card {
+            background: #f9f9fb;
+            padding: 12px;
+            border-radius: 10px;
+        }
+
         .skill-card h5 {
-            margin: 0 0 5px 0;
-            font-size: 14px;
-            color: #1d1d1f;
+            margin: 0 0 5px;
+            font-size: 0.85rem;
+        }
+
+        .skill-card p {
+            font-size: 0.75rem;
+            margin: 0;
+            color: #6e6e73;
         }
 
         .close-btn {
             position: absolute;
-            top: 20px;
-            right: 25px;
+            top: 15px;
+            right: 20px;
             font-size: 24px;
             cursor: pointer;
             color: #d2d2d7;
-            transition: color 0.2s;
             z-index: 1010;
         }
 
-        .close-btn:hover {
-            color: #86868b;
-        }
-
-        @media (max-width: 768px) {
-            .resume-window {
-                flex-direction: column;
-                height: 95vh;
-            }
-
-            .resume-sidebar {
-                width: 100%;
-                border-right: none;
-                border-bottom: 1px solid #d2d2d7;
-            }
-
-            .resume-main {
-                width: 100%;
-            }
-
-            .skills-grid {
-                grid-template-columns: 1fr;
-            }
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            font-size: 10px;
+            color: #3b4249;
+            text-align: center;
         }
     </style>
 </head>
 
 <body>
-    <div class="logo-container">
-        <img src="logo.png" alt="三号原点" style="width: 100%; border-radius: 12px;">
+
+    <div class="main-hero">
+        <div class="logo-container">
+            <img src="logo.png" alt="Logo" style="width:100%; border-radius:15px;">
+        </div>
+        <div class="text-content">
+            <h1>三号原点</h1>
+            <p class="info-p">坐标：南京 | 探索者：汤梦军</p>
+            <p class="info-p" style="animation-delay: 2s;">NETWORK ENGINEER ARCHIVE</p>
+            <button class="open-btn" onclick="toggleResume()">查看简历 [OPEN]</button>
+        </div>
     </div>
 
-    <div class="text-content">
-        <h1>三号原点</h1>
-        <p class="info-p">从故事出发，用AI造梦，窥见趋势的暗流</p>
-        <p class="info-p" style="animation-delay: 3s;">欢迎访问汤梦军的个人空间</p>
-
-        <button class="open-resume-btn" onclick="toggleResume()">查看简历 [OPEN DOSSIER]</button>
-    </div>
-
-    <div class="footer">© 2026 三号原点 | Powered by AI Dreams & Alyx Soul</div>
+    <div class="footer">© 2026 三号原点 | 全平台适配版</div>
 
     <div class="modal-overlay" id="resumeModal">
         <div class="resume-window">
@@ -412,97 +428,85 @@
 
             <div class="resume-sidebar">
                 <img src="your-photo.jpg" alt="汤梦军" class="profile-photo">
-                <div class="sidebar-info">
-                    <h2>汤梦军</h2>
-                    <div class="title">网络工程师 / 网络运维</div>
+                <div class="sidebar-name">汤梦军</div>
+                <div class="sidebar-tag">网络工程师 / 运维专家</div>
 
-                    <div class="contact-item">📞 13852067963</div>
-                    <div class="contact-item">📧 3042540737@qq.com</div>
-                    <div class="contact-item">📍 南京市栖霞区</div>
-                    <div class="contact-item">🔗 github.com/alyx03</div>
+                <div class="contact-box">
+                    <div><b>Phone</b><span>13852067963</span></div>
+                    <div><b>Email</b><span>3042540737@qq.com</span></div>
+                    <div><b>GitHub</b><span>github.com/alyx03</span></div>
+                    <div><b>Location</b><span>江苏省南京市栖霞区</span></div>
                 </div>
             </div>
 
             <div class="resume-main">
-                <div class="resume-section">
-                    <h3>核心技能 / Skills</h3>
-                    <div class="skills-grid">
-                        <div class="skill-card">
-                            <h5>数通基础 & 设备配置</h5>
-                            <p>精通TCP/IP模型；熟练配置华为/思科交换机/路由器（VLAN, STP, OSPF, ACL, NAT）；掌握eNSP/PT模拟器。</p>
-                        </div>
-                        <div class="skill-card">
-                            <h5>运维工具 & 排障</h5>
-                            <p>熟练Wireshark抓包分析；掌握Zabbix监控、Ansible自动化；熟悉Nginx, Redis, MySQL环境部署。</p>
-                        </div>
-                        <div class="skill-card">
-                            <h5>自动化 & 脚本</h5>
-                            <p>掌握Python（Netmiko/Paramiko库）、Shell脚本；可编写网络巡检与配置备份自动化脚本。</p>
-                        </div>
-                        <div class="skill-card">
-                            <h5>云网络 & 安全</h5>
-                            <p>熟悉阿里云/腾讯云VPC配置；了解FortiGate防火墙、OpenStack高可用集群及网络安全基础。</p>
-                        </div>
+                <h3 class="section-title">核心技能</h3>
+                <div class="skills-grid">
+                    <div class="skill-card">
+                        <h5>数通基础</h5>
+                        <p>精通TCP/IP、OSPF、VLAN、STP配置；熟练使用eNSP/PT模拟器。</p>
+                    </div>
+                    <div class="skill-card">
+                        <h5>自动化运维</h5>
+                        <p>掌握Python（Netmiko库）与Shell脚本，实现巡检与配置备份自动化。</p>
+                    </div>
+                    <div class="skill-card">
+                        <h5>服务部署</h5>
+                        <p>熟悉Nginx、Redis、MySQL环境搭建，具备ERP系统部署经验。</p>
+                    </div>
+                    <div class="skill-card">
+                        <h5>云网安全</h5>
+                        <p>熟悉阿里云VPC配置、FortiGate防火墙及OpenStack集群监测。</p>
                     </div>
                 </div>
 
-                <div class="resume-section">
-                    <h3>项目经验 / Projects</h3>
-                    <div class="exp-item">
-                        <div class="exp-header">
-                            <h4>企业级局域网搭建与优化</h4>
-                            <span class="exp-time">2024.03 - 2024.06</span>
-                        </div>
-                        <ul>
-                            <li>使用华为eNSP搭建3个VLAN企业网，配置OSPF动态路由，部署ACL限制非法访问。</li>
-                            <li>通过Wireshark定位丢包问题，优化后<span class="highlight">网络可用性达99.5%</span>。</li>
-                            <li>编写Shell脚本实现自动备份，<span class="highlight">减少手动操作成本80%</span>。</li>
-                        </ul>
+                <h3 class="section-title">项目经验</h3>
+                <div class="block">
+                    <div class="block-h">
+                        <h4>企业级局域网搭建与优化</h4>
+                        <span>2024.03 - 2024.06</span>
                     </div>
-                    <div class="exp-item">
-                        <div class="exp-header">
-                            <h4>校园网络故障排查与监控实训</h4>
-                            <span class="exp-time">2023.09 - 2023.12</span>
-                        </div>
-                        <ul>
-                            <li>模拟并修复DHCP池耗尽、DNS解析失败等故障，<span class="highlight">故障解决率100%</span>。</li>
-                            <li>基于Python-Tkinter开发多功能扫描系统，实现企业级轻量化毫秒级响应。</li>
-                        </ul>
+                    <ul>
+                        <li>配置OSPF动态路由实现跨网段通信，<span class="highlight">网络可用性提升至99.5%</span>。</li>
+                        <li>编写Shell脚本自动化备份，<span class="highlight">降低人工成本约80%</span>。</li>
+                    </ul>
+                </div>
+                <div class="block">
+                    <div class="block-h">
+                        <h4>校园网故障排查实训</h4>
+                        <span>2023.09 - 2023.12</span>
                     </div>
+                    <ul>
+                        <li>独立解决DHCP池耗尽、DNS解析失败等故障，<span class="highlight">解决率100%</span>。</li>
+                        <li>开发基于蓝心策略的轻量化扫描工具，实现毫秒级响应。</li>
+                    </ul>
                 </div>
 
-                <div class="resume-section">
-                    <h3>工作经历 / Experience</h3>
-                    <div class="exp-item">
-                        <div class="exp-header">
-                            <h4>南京商能科技有限公司 | 技术实施</h4>
-                            <span class="exp-time">2025.06 - 2026.02</span>
-                        </div>
-                        <ul>
-                            <li>处理办公网巡检与故障（IP冲突、WiFi断连），<span class="highlight">响应时长≤10min，解决率100%</span>。</li>
-                            <li>参与核心交换机升级，配置VLAN划分与端口映射，保障业务零中断。</li>
-                            <li>编写《运维手册》与《ERP技术文档》，<span class="highlight">提升团队运维效率30%</span>。</li>
-                        </ul>
+                <h3 class="section-title">工作经历</h3>
+                <div class="block">
+                    <div class="block-h">
+                        <h4>南京商能科技 | 技术实施</h4>
+                        <span>2025.06 - 2026.02</span>
                     </div>
+                    <ul>
+                        <li>负责核心设备升级、VLAN划分，保障业务迁移零中断。</li>
+                        <li>编写《运维手册》与《ERP技术文档》，<span class="highlight">提升效率30%</span>。</li>
+                    </ul>
                 </div>
 
-                <div class="resume-section">
-                    <h3>教育背景 / Education</h3>
-                    <div class="exp-item">
-                        <div class="exp-header">
-                            <h4>南京工业职业技术大学 | 网络工程技术</h4>
-                            <span class="exp-time">2021 - 2025</span>
-                        </div>
-                        <p><b>本科 | GPA：3.2/4.0</b></p>
-                        <p>主修：计算机网络、华为HCIA-Datacom、云计算运维、虚拟化技术、Linux系统管理等。</p>
+                <h3 class="section-title">教育背景</h3>
+                <div class="block">
+                    <div class="block-h">
+                        <h4>南京工业职业技术大学</h4>
+                        <span>2021 - 2025</span>
                     </div>
+                    <p><b>网络工程技术 | 本科 | GPA 3.2/4.0</b></p>
+                    <p>核心课：HCIA-Datacom、云计算、Linux系统管理、网络安全。</p>
                 </div>
 
-                <div class="resume-section">
-                    <h3>证书与荣誉 / Honors</h3>
-                    <p>• 英语四级 &nbsp;&nbsp; • 计算机三级（网络）</p>
-                    <p>• 创新创业大赛一等奖 &nbsp;&nbsp; • 校级三等奖学金（2022-2024）</p>
-                </div>
+                <h3 class="section-title">证书荣誉</h3>
+                <p>• 英语四级 (CET-4) &nbsp;&nbsp; • 计算机三级（网络技术）</p>
+                <p>• 创新创业大赛一等奖 &nbsp;&nbsp; • 校级三等奖学金</p>
             </div>
         </div>
     </div>
@@ -511,7 +515,14 @@
         function toggleResume() {
             const modal = document.getElementById('resumeModal');
             modal.classList.toggle('active');
+            // 防止弹窗时底层背景滚动
+            if (modal.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'hidden'; // 主页始终不滚动
+            }
         }
+
         window.onclick = function (event) {
             const modal = document.getElementById('resumeModal');
             if (event.target == modal) { toggleResume(); }
